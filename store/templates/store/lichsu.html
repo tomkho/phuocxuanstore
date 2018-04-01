@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block content %}
+<script>
+function confirmdel(url) {
+    if (confirm("Bạn có chắc muốn hủy đơn hàng này không? (Trưởng hợp bạn đã thanh toán mà chưa đươc xác nhận xin hãy liên hệ với chúng tôi)")) {
+        window.location.href=url;
+    } else {
+        false;
+    }
+}
+</script>
+ <div style="text-align:center;"><input type="button" value="LỊCH SỬ MUA HÀNG" class="bigtitle"/></div>
+<div class="cart_container">
+    <div class="cart_total"><h4>Thông Tin Khách Hàng: <span class="cart_value">{{profile}}  </span></h4></div>
+    {% for item in thanhtoan %}
+        <div class="cart_item">
+            <div class="cart_listing">
+                <span class="title">{{item.order_date}}</span>
+            </div>
+            <div class="cart_price">
+
+                <span class="cart_quantity">
+                    {{item.chitiet}}  </span> <span class="total">Tổng:   {{item.total}} VND </span> <span class="confirm"> {{item.status.name}}</span>
+                    {% if item.status.id == 1 %}
+                            <input type="button" value="Hủy" onclick="confirmdel('{% url 'cancel_order' item.id %}')" class="cancel"/>
+                    {%endif%}
+
+
+            </div>
+        </div>
+    {% empty %}
+
+        <div>Chưa có đơn hàng thanh toán!</div>
+    {%endfor%}
+
+</div>
+{% endblock %}

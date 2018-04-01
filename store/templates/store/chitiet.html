@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block content %}
+
+{% load humanize %}
+<div class="details_pr_display">
+    <img class="details_pr_img" src="{{MEDIA_URL}}{{product.img}}"/>
+    <span class="details_pr_name">{{product.name}}</span>
+    <span class="total"> {{product.price|intcomma}} VND / {{product.loai}}</span>
+    <span class="storefront_add_to_cart"><a href="{% url 'add_to_cart' product.id%}"><img style="width:150px;" src="{% static 'base/img/addcart.jpg' %}" /></a></span>
+    <div class="details_pr_description">{{product.description|linebreaks}}</div>
+    <div class="details_pr_review_title">Nhận Xét {% if reviews %} ({{reviews.count}}) {% endif %}</div>
+    <div class="details_pr_review">
+        {% if form %}
+            <form class="form-inline" action="{% url 'product_details' product.pk %}" method="POST">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <input type="submit" value="Gửi"/>
+            </form>
+        {% endif %}
+        {% for review in reviews %}
+            <div style="text-align:left;padding-left:20%;">
+                    - {{review.text}}
+
+                    <span style="font-style: italic;">
+                           ( bởi {{review.user.username}} vào {{review.published_date}})
+                    </span>
+            </div>
+        {% empty %}
+            <div style="margin-top:20px;">
+                 Chưa có nhận xét nào về sản phẩm!
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}

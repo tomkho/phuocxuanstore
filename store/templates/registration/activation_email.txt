@@ -1,0 +1,7 @@
+Xin chào,
+Bạn vừa đăng ký thành công tài khoản tại trang {{site.name}}. Xin hãy nhấp vào liên kết sau để kích hoạt tài khoản:
+http://{{site.domain}}{%url 'registration_activate' activation_key %}
+
+Liên kết chỉ tồn tại {{expiration_days}} ngày. Nếu bạn không phải là người tạo tài khoản thì hãy bỏ qua email này!
+
+---Cửa Hàng Thực Phẩm Phước Xuân---

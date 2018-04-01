@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{page|title}}</title>
+</head>
+<body>
+
+{% if request.user.is_authenticated %}
+
+<h2>Chào mừng
+    {% if request.user.first_name %}
+        {{request.user.first_name}}
+    {% else %}
+        {{request.user.username}}
+    {% endif %}
+
+
+    đến với Cửa Hàng Thực Phẩm Phước Xuân!  </h2> <a href="{% url 'auth_logout' %}">Log Out</a>
+
+{% else %}
+    Chào mừng đến với Cửa Hàng Thực Phẩm Phước Xuân! Ban co muon <a href="{% url 'auth_login' %}">Log In</a>
+
+{% endif %}
+Đang có {{count}} sản phẩm được sản xuất. User location: {{request.session.location}}
+</body>
+</html>

@@ -1,0 +1,88 @@
+{% extends 'bootstrap3/bootstrap3.html' %}
+{% load staticfiles %}
+{% load bootstrap3 %}
+{% load bootstrap_themes %}
+{% bootstrap_styles theme='simplex' type='min.css' %}
+{% block bootstrap3_extra_head %}
+{% load humanize %}
+<link href="http://fonts.goggleapis.com/css?family=Open+Sans:400,300,700" rel="stylesheet" type="text/css">
+<link href="{% static 'base/css/style.css' %}" rel="stylesheet" type="text/css">
+{% endblock %}
+{% block bootstrap3_title%}
+    {% block title%}
+        Phước Xuân Store
+    {% endblock %}
+{% endblock %}
+
+{% block bootstrap3_content%}
+    <nav class="navbar navbar-inverse navbar-fix-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a href="{% url 'index' %}" class="navbar-brand">Phước Xuân Store</a>
+            </div>
+            <div id="navbar" class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li class="hvr-curl-top-right"><a href="{% url 'index' %}">Trang Chủ</a></li>
+                    <li class="hvr-curl-top-right"><a href="{% url 'about' %}">Cửa Hàng</a></li>
+                    <li class="hvr-curl-top-right"><a href="{% url 'contact' %}">Liên Hệ</a></li>
+                    {% if request.user.is_authenticated %}<li class="hvr-curl-top-right"><a href="{% url 'cart'%}">Giỏ Hàng</a></li>{% endif %}
+                </ul>
+                <div class="navbar-form pull-right">
+                        {% if request.user.is_authenticated %}
+
+
+                             <div class="dropdown">
+                                <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                                    Xin Chào,
+                                    {% if request.user.first_name %}
+                                        {{request.user.first_name}}
+                                    {% else %}
+                                        {{request.user.username}}
+                                    {% endif %}!
+                                <span class="caret"></span></button>
+                                <ul class="dropdown-menu">
+                                    <li><a href="{% url 'history' %}">Lịch Sử Giao Dịch</a></li>
+                                    <li><a href="{% url 'password_change' %}">Đổi Mật Khẩu</a></li>
+                                    <li><a href="{% url 'auth_logout' %}">Đăng Xuất</a></li>
+                                </ul>
+                              </div>
+
+                        {% else %}
+                            Xin Chào ! Bạn có muốn <a href="{% url 'auth_login' %}">Đăng Nhập</a> hay <a href="{% url 'registration_register' %}">Đăng Ký</a>
+
+                        {% endif %}
+                </div>
+            </div>
+
+        </div>
+    </nav>
+
+ <div class="mainnd">
+  {% block content %}
+         <div style="text-align:center;"><input type="button" value="DANH SÁCH SẢN PHẨM" class="bigtitle"/></div>
+        {% for product in products %}
+
+           <div class="storefront_pr_display">
+               <a href="{% url 'product_details' product.id%}">
+                <img src="{{MEDIA_URL}}{{product.img}}" style="max-width:150px;"/>
+                <span class="storefront_pr_name">{{product.name}}</span>
+                <span class="storefront_pr_price">Giá: {{product.price|intcomma}} VND / {{product.loai}}</span>
+               </a>
+
+               <span class="storefront_add_to_cart"><a href="{% url 'add_to_cart' product.id%}"><img style="width:150px;" src="{% static 'base/img/addcart.jpg' %}" /></a></span>
+           </div>
+               {% endfor %}
+  {% endblock %}
+</div>
+    <div class="row tex-center navbar footer">
+        <div class="col-md-12">
+            <p>2018 Phước Xuân Store</p>
+        </div>
+    </div>
+
+{% endblock %}

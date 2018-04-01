@@ -1,0 +1,56 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="{% static 'base/css/style.css' %}" rel="stylesheet" type="text/css">
+    <title>{{page|title}}</title>
+</head>
+<body>
+{% block content %}
+ <div class="container-fluid">
+        <img src="{% static 'base/img/header.jpg' %}" class="bg"/>
+        <div class="parallax">
+            {% block body %}
+            <div class="">
+               {% if request.user.is_authenticated %}
+
+                <h2>Chào mừng
+                    {% if request.user.first_name %}
+                        {{request.user.first_name}}
+                    {% else %}
+                        {{request.user.username}}
+                    {% endif %}
+
+
+                    đến với Cửa Hàng Thực Phẩm Phước Xuân!  </h2> <a href="{% url 'auth_logout' %}">Log Out</a>
+
+                {% else %}
+                    Chào mừng đến với Cửa Hàng Thực Phẩm Phước Xuân! Ban co muon <a href="{% url 'auth_login' %}">Log In</a>
+
+                {% endif %}
+                Đang có {{count}} sản phẩm được sản xuất. User location: {{request.session.location}}
+                            </div>
+            {% endblock %}
+        </div>
+    </div>
+{% endblock %}
+
+</body>
+</html>
+
+
+  <div class="container-fluid">
+        <img src="{% static 'base/img/header.jpg' %}" class="bg"/>
+        <div class="parallax">
+            <div class="row">
+
+                <div class="col-md-8 col-md-offset-2 col-md-sm-12 maincontent">
+                    {% block body %}
+                        Cua Hang Phuoc Xuan Online!
+                    {% endblock %}
+                </div>
+
+            </div>
+        </div>
+    </div>

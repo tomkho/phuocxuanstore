@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block content %}
+ <div style="text-align:center;"><input type="button" value="THANH TOÁN" class="bigtitle"/></div>
+<div class="cart_container">
+    <div class="cart_total"><h4>Thông Tin Khách Hàng: <span class="cart_value">{{profile}}  </span></h4></div>
+    {% for item in cart %}
+        <div class="cart_item">
+            <div class="cart_listing">
+                <span class="title">{{item.product.name}}</span>
+            </div>
+            <div class="cart_price">
+                <span class="cart_quantity">{{item.quantity}} x <span class="cart_value">{{item.product.price}} VND</span></span>
+            </div>
+        </div>
+    {% empty %}
+
+        <div>Trong giỏ hàng không có sản phẩm nào!</div>
+    {%endfor%}
+    <div class="cart_total">
+        <h4>Tổng Cộng: <span class="cart_value">{{total}} VND </span></h4>
+        {%if count%}
+            <a target="_blank" href="{% url 'requesttt' %}"><img src="https://www.nganluong.vn/css/newhome/img/button/safe-pay-3.png"border="0" /></a>
+            <input type="submit" value="Thanh Toán Chuyển Khoản" onclick="window.location.href='{% url 'complete_order' %}'" class="ck"/>
+        {%endif%}
+    </div>
+</div>
+{% endblock %}
